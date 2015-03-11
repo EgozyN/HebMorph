@@ -31,8 +31,8 @@ public class TestHebrewTokenizer extends BaseTokenStreamTestCase {
 
     Analyzer a = new Analyzer() {
         @Override
-        protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
-            final HebrewTokenizer src = new HebrewTokenizer(reader, HSpellLoader.readDefaultPrefixes());
+        protected TokenStreamComponents createComponents(String fieldName) {
+            final HebrewTokenizer src = new HebrewTokenizer(HSpellLoader.readDefaultPrefixes());
             return new Analyzer.TokenStreamComponents(src);
         }
     };

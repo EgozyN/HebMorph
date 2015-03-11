@@ -20,14 +20,12 @@ package org.apache.lucene.analysis.hebrew;
 import org.apache.lucene.analysis.*;
 
 import java.io.IOException;
-import java.io.Reader;
 
 public class TestAddSuffixFilter extends BaseTokenStreamTestCase {
     Analyzer a = new Analyzer() {
         @Override
-        protected TokenStreamComponents createComponents(String fieldName,
-                                                         Reader reader) {
-            Tokenizer t = new MockTokenizer(reader, MockTokenizer.KEYWORD, false);
+        protected TokenStreamComponents createComponents(String fieldName) {
+            Tokenizer t = new MockTokenizer(MockTokenizer.KEYWORD, false);
             return new TokenStreamComponents(t, new AddSuffixFilter(t, '$') {
                 @Override
                 protected void handleCurrentToken() {
@@ -40,9 +38,8 @@ public class TestAddSuffixFilter extends BaseTokenStreamTestCase {
 
     Analyzer a2 = new Analyzer() {
         @Override
-        protected TokenStreamComponents createComponents(String fieldName,
-                                                         Reader reader) {
-            Tokenizer t = new MockTokenizer(reader, MockTokenizer.KEYWORD, false);
+        protected TokenStreamComponents createComponents(String fieldName) {
+            Tokenizer t = new MockTokenizer(MockTokenizer.KEYWORD, false);
             return new TokenStreamComponents(t, new AddSuffixFilter(t, '$') {
                 @Override
                 protected void handleCurrentToken() {

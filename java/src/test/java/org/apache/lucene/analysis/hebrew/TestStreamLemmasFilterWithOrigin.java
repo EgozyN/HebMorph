@@ -21,15 +21,14 @@ import com.carrotsearch.randomizedtesting.annotations.Repeat;
 import org.apache.lucene.analysis.Analyzer;
 
 import java.io.IOException;
-import java.io.Reader;
 
 public class TestStreamLemmasFilterWithOrigin extends BaseTokenStreamWithDictionaryTestCase {
     Analyzer a = new Analyzer() {
         @Override
-        protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
+        protected TokenStreamComponents createComponents(String fieldName) {
             StreamLemmasFilter src = null;
             try {
-                src = new StreamLemmasFilter(reader, getDictionary(false));
+                src = new StreamLemmasFilter(getDictionary(false));
                 src.setKeepOriginalWord(true);
             } catch (IOException e) {
                 e.printStackTrace();

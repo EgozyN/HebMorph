@@ -22,15 +22,14 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.Tokenizer;
 
 import java.io.IOException;
-import java.io.Reader;
 
 public class TestStreamLemmasFilter extends BaseTokenStreamWithDictionaryTestCase {
     Analyzer a = new Analyzer() {
         @Override
-        protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
+        protected TokenStreamComponents createComponents(String fieldName) {
             Tokenizer src = null;
             try {
-                src = new StreamLemmasFilter(reader, getDictionary(true));
+                src = new StreamLemmasFilter(getDictionary(true));
             } catch (IOException e) {
                 e.printStackTrace();
             }

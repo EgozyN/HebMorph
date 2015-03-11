@@ -23,14 +23,12 @@ import org.apache.lucene.analysis.MockTokenizer;
 import org.apache.lucene.analysis.Tokenizer;
 
 import java.io.IOException;
-import java.io.Reader;
 
 public class TestNiqqudFilter extends BaseTokenStreamTestCase {
     Analyzer a = new Analyzer() {
         @Override
-        protected TokenStreamComponents createComponents(String fieldName,
-                                                         Reader reader) {
-            Tokenizer t = new MockTokenizer(reader, MockTokenizer.KEYWORD, false);
+        protected TokenStreamComponents createComponents(String fieldName) {
+            Tokenizer t = new MockTokenizer(MockTokenizer.KEYWORD, false);
             return new TokenStreamComponents(t, new NiqqudFilter(t));
         }
     };

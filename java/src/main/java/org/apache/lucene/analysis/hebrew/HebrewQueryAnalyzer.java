@@ -24,7 +24,6 @@ import org.apache.lucene.analysis.commongrams.CommonGramsFilter;
 import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilter;
 
 import java.io.IOException;
-import java.io.Reader;
 
 public class HebrewQueryAnalyzer extends HebrewAnalyzer {
     public HebrewQueryAnalyzer(DictHebMorph dict) throws IOException {
@@ -36,10 +35,10 @@ public class HebrewQueryAnalyzer extends HebrewAnalyzer {
     }
 
     @Override
-    protected TokenStreamComponents createComponents(final String fieldName, final Reader reader) {
+    protected TokenStreamComponents createComponents(final String fieldName) {
         // on query - if marked as keyword don't keep origin, else only lemmatized (don't suffix)
         // if word termintates with $ will output word$, else will output all lemmas or word$ if OOV
-        final StreamLemmasFilter src = new StreamLemmasFilter(reader, dict, SPECIAL_TOKENIZATION_CASES, commonWords, lemmaFilter);
+        final StreamLemmasFilter src = new StreamLemmasFilter(dict, SPECIAL_TOKENIZATION_CASES, commonWords, lemmaFilter);
         src.setSuffixForExactMatch(originalTermSuffix);
         src.setKeepOriginalWord(true);
 

@@ -22,12 +22,11 @@ import com.code972.hebmorph.datastructures.DictRadix;
 import com.code972.hebmorph.lemmafilters.BasicLemmaFilter;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.util.CharArraySet;
-import org.apache.lucene.index.AtomicReaderContext;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.memory.MemoryIndex;
-import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Scorer;
+import org.apache.lucene.search.SimpleCollector;
 import org.apache.lucene.search.TermQuery;
 import org.junit.Test;
 
@@ -59,8 +58,8 @@ public class RealDataTest extends TestBase {
         }
 
         @Override
-        protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
-            final StreamLemmasFilter src = new StreamLemmasFilter(reader, dict, specialTokenizationCases, commonWords, new BasicLemmaFilter());
+        protected TokenStreamComponents createComponents(String fieldName) {
+            final StreamLemmasFilter src = new StreamLemmasFilter(dict, specialTokenizationCases, commonWords, new BasicLemmaFilter());
             src.setKeepOriginalWord(true);
 
             return new TokenStreamComponents(src) {
@@ -152,7 +151,7 @@ public class RealDataTest extends TestBase {
         return results;
     }
 
-    public static class ExistsCollector extends Collector {
+    public static class ExistsCollector extends SimpleCollector {
 
         private boolean exists;
 
@@ -174,13 +173,13 @@ public class RealDataTest extends TestBase {
             exists = true;
         }
 
-        @Override
-        public void setNextReader(AtomicReaderContext context) throws IOException {
-        }
-
-        @Override
-        public boolean acceptsDocsOutOfOrder() {
-            return true;
-        }
+//        @Override
+//        public void setNextReader(LeafReaderContext context) throws IOException {
+//        }
+//
+//        @Override
+//        public boolean acceptsDocsOutOfOrder() {
+//            return true;
+//        }
     }
 }

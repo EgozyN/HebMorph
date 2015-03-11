@@ -24,7 +24,6 @@ import org.apache.lucene.analysis.commongrams.CommonGramsFilter;
 import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilter;
 
 import java.io.IOException;
-import java.io.Reader;
 
 public class HebrewIndexingAnalyzer extends HebrewAnalyzer {
     public HebrewIndexingAnalyzer(DictHebMorph dict) throws IOException {
@@ -36,11 +35,11 @@ public class HebrewIndexingAnalyzer extends HebrewAnalyzer {
     }
 
     @Override
-    protected TokenStreamComponents createComponents(final String fieldName, final Reader reader) {
+    protected TokenStreamComponents createComponents(final String fieldName) {
         // on indexing we should always keep both the stem and marked original word
         // will ignore $ && will always output all lemmas + origin word$
         // basically, if analyzerType == AnalyzerType.INDEXING)
-        final StreamLemmasFilter src = new StreamLemmasFilter(reader, dict, SPECIAL_TOKENIZATION_CASES, commonWords, lemmaFilter);
+        final StreamLemmasFilter src = new StreamLemmasFilter(dict, SPECIAL_TOKENIZATION_CASES, commonWords, lemmaFilter);
         src.setKeepOriginalWord(true);
 
         TokenStream tok = new ASCIIFoldingFilter(src);

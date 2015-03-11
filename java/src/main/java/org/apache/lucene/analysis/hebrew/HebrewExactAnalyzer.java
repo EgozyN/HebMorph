@@ -25,7 +25,6 @@ import org.apache.lucene.analysis.core.LowerCaseFilter;
 import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilter;
 
 import java.io.IOException;
-import java.io.Reader;
 
 public class HebrewExactAnalyzer extends HebrewAnalyzer {
     public HebrewExactAnalyzer(DictHebMorph dict) throws IOException {
@@ -37,9 +36,9 @@ public class HebrewExactAnalyzer extends HebrewAnalyzer {
     }
 
     @Override
-    protected TokenStreamComponents createComponents(final String fieldName, final Reader reader) {
+    protected TokenStreamComponents createComponents(final String fieldName) {
         // on exact - we don't care about suffixes at all, we always output original word with suffix only
-        final HebrewTokenizer src = new HebrewTokenizer(reader, dict.getPref(), SPECIAL_TOKENIZATION_CASES);
+        final HebrewTokenizer src = new HebrewTokenizer(dict.getPref(), SPECIAL_TOKENIZATION_CASES);
         TokenStream tok = new NiqqudFilter(src);
         tok = new ASCIIFoldingFilter(tok);
         tok = new LowerCaseFilter(tok);
